@@ -11,7 +11,7 @@ int main() {
     cin >> escolha;
 
     if (escolha == 1) {
-        // Definição do sistema triangular superior da questão 2.22
+        
         vector<vector<double>> A = {
             {1, -2, 3, 1},
             {0, 3, 1, 0},
