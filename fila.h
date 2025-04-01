@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-
+#include <locale>
 struct fila{
     int tamanho;
     int inicio;
@@ -34,8 +34,10 @@ void inserirElemento(fila *const f, int elemento){
         std::cout << "Fila cheia\n";
         return;
     }
-    
     f->fim = (f->fim + 1) % f->tamanho;
+    if(filaVazia(f)){
+        f->inicio = 0;
+    }
     f->array[f->fim] = elemento;
     f->quantidadeDeElementos++;
 
@@ -43,7 +45,7 @@ void inserirElemento(fila *const f, int elemento){
 char* mostraFila(fila const * const f) {
     char *elementos = new char[256]; // Alocação dinâmica
     if (f->quantidadeDeElementos == 0) {
-        sprintf(elementos, "fila:{%c}", char(248));
+        strcpy(elementos, "fila:{\u2205}");
     } else {
         strcpy(elementos, "fila:{");
         char buffer[20];
@@ -56,6 +58,7 @@ char* mostraFila(fila const * const f) {
         }
         strcat(elementos, "}");
     }
+    elementos[strlen(elementos)] = '\0';
     return elementos;
 }
 
@@ -65,9 +68,25 @@ void mostrarDadosFila(fila const * const f) {
     std::cout << "Fim: " << f->fim << "\n";
     std::cout << "Quantidade de elementos: " << f->quantidadeDeElementos << "\n";
     
-    std::cout << "Elementos na fila: ";
-    for (int i = 0; i < f->quantidadeDeElementos; i++) {
-        std::cout << f->array[(f->inicio + i) % f->tamanho] << " ";
-    }
+    
     std::cout << "\n";
+}
+void desenfileirar(fila *const f) {
+    if (filaVazia(f)) {
+        std::cout << "Erro: Fila vazia, não é possível desenfileirar.\n";
+        return;
+    }
+
+    int elementoRemovido = f->array[f->inicio]; 
+    f->inicio = (f->inicio + 1) % f->tamanho;  // Atualiza o índice do início de forma circular
+    f->quantidadeDeElementos--;                
+
+}
+
+int acessar(fila const *const f){
+    if(filaVazia(f)) {
+        std::cout << "Erro: Fila vazia, não é possível acessar o elemento.\n";
+        return -1; 
+    }
+    return f->array[f->inicio]; // Retorna o elemento no início da fila
 }
