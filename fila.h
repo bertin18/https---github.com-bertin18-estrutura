@@ -42,10 +42,11 @@ void inserirElemento(fila *const f, int elemento){
     f->quantidadeDeElementos++;
 
 }
+
 char* mostraFila(fila const * const f) {
     char *elementos = new char[256]; // Alocação dinâmica
     if (f->quantidadeDeElementos == 0) {
-        strcpy(elementos, "fila:{\u2205}");
+        return const_cast<char*>("fila:{\u2205}");
     } else {
         strcpy(elementos, "fila:{");
         char buffer[20];
@@ -71,6 +72,7 @@ void mostrarDadosFila(fila const * const f) {
     
     std::cout << "\n";
 }
+
 void desenfileirar(fila *const f) {
     if (filaVazia(f)) {
         std::cout << "Erro: Fila vazia, não é possível desenfileirar.\n";
