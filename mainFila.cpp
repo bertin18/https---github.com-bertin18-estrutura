@@ -1,8 +1,7 @@
 #include <iostream>
-#include "fila.h" // Se você salvou suas funções em um .h/.cpp separado
-// Ou simplesmente inclua todas as funções diretamente acima do main
+#include "fila.h" 
 
-int main() {
+int main(void) {
     fila filaTeste;
 
     // Primeiro teste
