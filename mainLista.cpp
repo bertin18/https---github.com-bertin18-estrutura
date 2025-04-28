@@ -1,12 +1,6 @@
 #include "ListaVetor.h"
 
-void exibirLista(TLista const *lista) {
-    printf("Lista: ");
-    for (int i = 0; i < lista->quantidadeDeElementos; i++) {
-        printf("%d ", lista->array[i]);
-    }
-    printf("\n");
-}
+
 
 int main() {
     TLista lista;
@@ -20,8 +14,8 @@ int main() {
     printf("Apos insercoes ordenadas:\n");
     exibirLista(&lista);
 
-    if (removerElementoLista(&lista, 2)) {
-        printf("Elemento removido da posicao 2.\n");
+    if (removerElementoLista(&lista, 5)) {
+        printf("Elemento removido.\n");
     } else {
         printf("Nao foi possivel remover o elemento.\n");
     }

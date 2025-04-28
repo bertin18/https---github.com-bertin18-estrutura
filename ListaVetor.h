@@ -70,24 +70,31 @@ int removerInicioLista(TLista *const lista) {
 }
 
 
-int removerElementoLista(TLista *const lista, int posicao) {
-    if (listaEstaVazia(lista) || posicao < 0 || posicao >= lista->quantidadeDeElementos) {
-        return 0; // posição inválida ou lista vazia
+int removerElementoLista(TLista *const lista, int elemento) {
+    if (listaEstaVazia(lista)) return 0;
+
+    int posicao = -1;
+    for (int i = 0; i < lista->quantidadeDeElementos; i++) {
+        if (lista->array[i] == elemento) {
+            posicao = i;
+            break;
+        }
     }
 
-    // Desloca os elementos para "tapar o buraco"
+    if (posicao == -1) return 0; 
+
     for (int i = posicao; i < lista->quantidadeDeElementos - 1; i++) {
         lista->array[i] = lista->array[i + 1];
     }
 
     lista->quantidadeDeElementos--;
-    return 1; // sucesso
+    return 1;
 }
 
 // Função que insere um elemento de forma ordenada na lista
 int inserirOrdenadoLista(TLista *const lista, int elemento) {
     if (listaEstaCheia(lista)) {
-        return 0; // Lista cheia, não é possível inserir
+        return 0; 
     }
 
     int i = lista->quantidadeDeElementos - 1;
@@ -101,5 +108,13 @@ int inserirOrdenadoLista(TLista *const lista, int elemento) {
     // Insere o novo elemento na posição correta
     lista->array[i + 1] = elemento;
     lista->quantidadeDeElementos++;
-    return 1; // sucesso
+    return 1; 
+}
+
+void exibirLista(TLista const *lista) {
+    printf("Lista: ");
+    for (int i = 0; i < lista->quantidadeDeElementos; i++) {
+        printf("%d ", lista->array[i]);
+    }
+    printf("\n");
 }
