@@ -30,7 +30,7 @@ void empilhar(Pilha* p, int valor){
     novo->dado = valor;
     novo->proximo = p->topo; 
     p->topo = novo;
-    printf("Elemento %d inserido.\n", valor);
+    
 }
 
 int desempilhar(Pilha *const p){
@@ -42,7 +42,7 @@ int desempilhar(Pilha *const p){
     int valor = temp->dado;
     p->topo = temp->proximo;
     free(temp);
-    printf("Elemento %d removido.\n", valor);
+    
     return valor;
 }
 
@@ -74,7 +74,7 @@ char* imprimir(const Pilha *const p) {
 }
 
 void liberarPilha(Pilha* const p) {
-    if (p == NULL) return; // Proteção contra ponteiro nulo
+    if (p == NULL) return; 
 
     No* atual = p->topo;
     while (atual != NULL) {
@@ -83,6 +83,6 @@ void liberarPilha(Pilha* const p) {
         free(temp);
     }
 
-    p->topo = NULL; // Garante que a pilha fique vazia após a liberação
+    p->topo = NULL; 
     printf("Pilha liberada com sucesso.\n");
 }
