@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 typedef struct No {
     int dado;
     struct No* proximo;
@@ -54,6 +55,19 @@ int enfileirar(int dado, fila *const f) {
     return 1; // Sucesso
 }
 
+int desenfileirar(fila* f, int* valorRemovido) {
+    if (estaVazia(f)) return 0;
+    No* temp = f->inicio;
+    *valorRemovido = temp->dado;
+    f->inicio = f->inicio->proximo;
+    if (f->inicio == NULL) {
+        f->fim = NULL;
+    }
+    free(temp);
+    f->tamanho--;
+    return 1;
+}
+
 char* mostrarFila( fila const * const f) {
     char* str = (char*)malloc(1024);
     if (str == NULL) {
@@ -61,7 +75,7 @@ char* mostrarFila( fila const * const f) {
         exit(1);
     }
 
-    // Se a fila estiver vazia, informe isso também
+    
     if (estaVazia(f)) {
         snprintf(str, 1024, "{VAZIA}");
         return str;
@@ -78,4 +92,60 @@ char* mostrarFila( fila const * const f) {
     }
     strcat(str, "}");
     return str;
+}
+
+void liberarFila(fila* f) {
+    No* atual = f->inicio;
+    while (atual != NULL) {
+        No* temp = atual;
+        atual = atual->proximo;
+        free(temp);
+    }
+    f->inicio = NULL;
+    f->fim = NULL;
+    f->tamanho = 0;
+}
+void ordenarFilaRotacionando(fila* f) {
+    if (estaVazia(f)) return;
+
+    int n = f->tamanho;
+
+    for (int i = 0; i < n; i++) {
+        int aux = INT_MAX;
+        int atual;
+
+        
+        for (int j = 0; j < n; j++) {
+            desenfileirar(f, &atual);
+
+            
+            if (j < n - i && atual < aux) {
+                aux = atual;
+            }
+
+            
+            enfileirar(atual, f);
+        }
+
+        
+        int encontrado = 0;
+        for (int j = 0; j < n; j++) {
+            desenfileirar(f, &atual);
+
+            if (atual == aux && !encontrado && j < n - i) {
+                encontrado = 1; 
+            } else {
+                enfileirar(atual, f);
+            }
+        }
+
+        enfileirar(aux, f);
+    }
+
+    // Rotacionar para que os menores fiquem no início
+    for (int i = 0; i < n; i++) {
+        int temp;
+        desenfileirar(f, &temp);
+        enfileirar(temp, f);
+    }
 }

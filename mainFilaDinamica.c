@@ -1,23 +1,40 @@
 #include "filaDinamica.h"
-int main(void)
-{
-    fila filaTeste;
-    
-    //Primeiro teste
-    printf("\nFila Declarada");
-    inicializarFila(&filaTeste);
-    char *str = mostrarFila(&filaTeste);
-    printf("\n%s\n", str);
-    free(str);
+#include <time.h>
 
-    //Segundo teste
-    for(int contador = 0; contador < 10; contador++){
-        if(enfileirar(contador*10, &filaTeste))
-            printf("Elemento %d incluido na Fila\n",contador*10);
-        else printf("Elemento %d Não incluido na Fila\n",contador*10);
+#define TAMANHO 7
+
+int main() {
+    srand(time(NULL));
+
+    int vetor[TAMANHO];
+    fila f;
+    inicializarFila(&f);
+
+    printf("Vetor original: ");
+    for (int i = 0; i < TAMANHO; i++) {
+        vetor[i] = rand() % 10 + 1; // Valores de 1 a 10, com repetição
+        printf("%d ", vetor[i]);
+        enfileirar(vetor[i], &f);
     }
-    printf("\nFila com dados incluidos");
-    str = mostrarFila(&filaTeste);
-    printf("\n%s\n", str);
-    free(str);    
+    printf("\n");
+
+    char* filaAntes = mostrarFila(&f);
+    printf("Fila antes da ordenação: %s\n", filaAntes);
+    free(filaAntes);
+
+    ordenarFilaRotacionando(&f);
+
+    char* filaDepois = mostrarFila(&f);
+    printf("Fila depois da ordenação: %s\n", filaDepois);
+    free(filaDepois);
+
+    printf("Vetor ordenado: ");
+    for (int i = 0; i < TAMANHO; i++) {
+        desenfileirar(&f, &vetor[i]);
+        printf("%d ", vetor[i]);
+    }
+    printf("\n");
+
+    liberarFila(&f);
+    return 0;
 }
