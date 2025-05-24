@@ -12,7 +12,7 @@ int main() {
 
     printf("Vetor original: ");
     for (int i = 0; i < TAMANHO; i++) {
-        vetor[i] = rand() % 10 + 1; // Valores de 1 a 10, com repetição
+        vetor[i] = rand() % 10 + 1; 
         printf("%d ", vetor[i]);
         enfileirar(vetor[i], &f);
     }

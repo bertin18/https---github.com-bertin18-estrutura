@@ -142,7 +142,7 @@ void ordenarFilaRotacionando(fila* f) {
         enfileirar(aux, f);
     }
 
-    // Rotacionar para que os menores fiquem no início
+  
     for (int i = 0; i < n; i++) {
         int temp;
         desenfileirar(f, &temp);
