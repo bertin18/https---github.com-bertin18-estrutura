@@ -106,7 +106,7 @@ void liberarFila(fila* f) {
     f->tamanho = 0;
 }
 void ordenarFilaRotacionando(fila* f) {
-    if (estaVazia(f)) return;
+    if (estaVazia(f)) return ;
 
     int n = f->tamanho;
 
